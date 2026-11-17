@@ -10,7 +10,7 @@ Integrazione custom per Home Assistant pensata per monitorare le fermate GTT (To
 
 - Unisce in automatico orari real-time e programmati (oppure permette di usare solo uno dei due).
 - Legge direttamente l'endpoint GTT senza dipendere da servizi esterni aggiuntivi.
-- Al primo inserimento del codice palina interroga la fermata e mostra le linee e direzioni attive in quel momento.
+- Al primo inserimento del codice fermata interroga la fermata e mostra le linee e direzioni attive in quel momento.
 - Supporta filtri per singola linea, più linee separate da virgola (es. `49, 1S`) oppure tutte le linee della fermata.
 - Supporta il filtro per direzione (anche parziale, es. `PORTA SUSA`).
 - Permette di aggiungere la stessa fermata più volte con filtri diversi.
@@ -36,7 +36,7 @@ Integrazione custom per Home Assistant pensata per monitorare le fermate GTT (To
 
 Vai su **Impostazioni -> Dispositivi e servizi -> Aggiungi integrazione -> GTT Smart**.
 
-1. Inserisci il numero della palina (es. `1356`).
+1. Inserisci il numero della fermata (es. `1356`).
 2. Nel passaggio successivo scegli il nome del sensore e imposta gli eventuali filtri per linea e direzione (se lasci vuoto, monitora tutto).
 
 Dalle opzioni dell'integrazione (pulsante **Configura**) puoi regolare in qualsiasi momento:
