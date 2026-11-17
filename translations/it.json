@@ -1,0 +1,50 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Aggiungi fermata GTT",
+        "description": "Inserisci il codice della palina GTT (es. 1356).",
+        "data": {
+          "stop_id": "Codice palina"
+        }
+      },
+      "details": {
+        "title": "Configura filtri fermata {stop_id}",
+        "description": "Linee trovate ora alla fermata:\n{discovered_lines}\n\nLascia vuoti Linea o Direzione per monitorarle tutte (puoi separare più linee con la virgola, es: 49, 1S).",
+        "data": {
+          "name": "Nome dispositivo/sensore",
+          "line": "Linea/e (opzionale)",
+          "direction": "Direzione (opzionale, anche parziale)",
+          "mode": "Modalità calcolo orari",
+          "min_minutes_away": "Nascondi bus tra meno di (minuti)",
+          "scan_interval": "Intervallo aggiornamento (secondi)",
+          "match_window": "Tolleranza abbinamento RT/Programmato (minuti)"
+        }
+      }
+    },
+    "error": {
+      "cannot_connect": "Impossibile contattare l'API GTT o codice palina non valido.",
+      "invalid_stop": "Inserisci un codice palina valido."
+    },
+    "abort": {
+      "already_configured": "Questa combinazione fermata/linea/direzione è già configurata."
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "Opzioni GTT Smart",
+        "data": {
+          "line": "Linea/e (opzionale, es: 49, 1S)",
+          "direction": "Direzione (opzionale, anche parziale)",
+          "mode": "Modalità calcolo orari",
+          "min_minutes_away": "Nascondi bus tra meno di (minuti)",
+          "scan_interval": "Intervallo aggiornamento (secondi)",
+          "match_window": "Tolleranza abbinamento RT/Programmato (minuti)",
+          "empty_state_text": "Testo stato quando non ci sono bus",
+          "empty_attr_text": "Testo attributi vuoti (first/second/third)"
+        }
+      }
+    }
+  }
+}

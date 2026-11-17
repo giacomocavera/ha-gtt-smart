@@ -1,0 +1,10 @@
+{
+  "domain": "gtt_smart",
+  "name": "GTT Smart",
+  "codeowners": [],
+  "config_flow": true,
+  "documentation": "https://github.com/giacomocavera/ha-gtt-smart",
+  "integration_type": "service",
+  "iot_class": "cloud_polling",
+  "version": "1.0.0"
+}
