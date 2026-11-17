@@ -1,0 +1,50 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Add GTT stop",
+        "description": "Enter the GTT stop ID (e.g. 1356).",
+        "data": {
+          "stop_id": "Stop ID"
+        }
+      },
+      "details": {
+        "title": "Configure stop {stop_id}",
+        "description": "Lines currently found at this stop:\n{discovered_lines}\n\nLeave Line or Direction empty to monitor all (comma-separated lines supported, e.g. 49, 1S).",
+        "data": {
+          "name": "Device/sensor name",
+          "line": "Line(s) (optional)",
+          "direction": "Direction (optional, partial match)",
+          "mode": "Schedule calculation mode",
+          "min_minutes_away": "Hide buses arriving in less than (minutes)",
+          "scan_interval": "Update interval (seconds)",
+          "match_window": "RT/Scheduled match window (minutes)"
+        }
+      }
+    },
+    "error": {
+      "cannot_connect": "Unable to reach GTT API or invalid stop ID.",
+      "invalid_stop": "Please enter a valid stop ID."
+    },
+    "abort": {
+      "already_configured": "This stop/line/direction combination is already configured."
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "GTT Smart Options",
+        "data": {
+          "line": "Line(s) (optional, e.g. 49, 1S)",
+          "direction": "Direction (optional, partial match)",
+          "mode": "Schedule calculation mode",
+          "min_minutes_away": "Hide buses arriving in less than (minutes)",
+          "scan_interval": "Update interval (seconds)",
+          "match_window": "RT/Scheduled match window (minutes)",
+          "empty_state_text": "State text when no upcoming bus",
+          "empty_attr_text": "Empty attribute text (first/second/third)"
+        }
+      }
+    }
+  }
+}
