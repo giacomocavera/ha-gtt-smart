@@ -61,7 +61,7 @@ class GTTSmartBaseSensor(CoordinatorEntity[GTTSmartCoordinator], SensorEntity):
             identifiers={(DOMAIN, entry.entry_id)},
             name=device_name,
             manufacturer="GTT Torino",
-            model=f"Palina {self._stop_id}",
+            model=f"Stop {self._stop_id}",
         )
 
 

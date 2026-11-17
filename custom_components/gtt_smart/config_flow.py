@@ -40,15 +40,15 @@ MODE_SELECTOR = selector.SelectSelector(
         options=[
             selector.SelectOptionDict(
                 value=MODE_SMART,
-                label="Smart (Real-Time + fallback Programmato)",
+                label="Smart (Real-Time + Scheduled fallback)",
             ),
             selector.SelectOptionDict(
                 value=MODE_RT_ONLY,
-                label="Solo Real-Time (PassaggiRT)",
+                label="Real-Time only (PassaggiRT)",
             ),
             selector.SelectOptionDict(
                 value=MODE_PR_ONLY,
-                label="Solo Programmato (PassaggiPR)",
+                label="Scheduled only (PassaggiPR)",
             ),
         ],
         mode=selector.SelectSelectorMode.DROPDOWN,
@@ -94,14 +94,14 @@ class GTTSmartConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
                     lines_found: list[str] = []
                     for item in data:
                         if isinstance(item, dict):
-                            linea = str(item.get("Linea", "")).strip()
-                            direzione = str(item.get("Direzione", "")).strip()
-                            if linea:
-                                lines_found.append(f"• {linea} → {direzione}")
+                            line = str(item.get("Linea", "")).strip()
+                            direction = str(item.get("Direzione", "")).strip()
+                            if line:
+                                lines_found.append(f"• {line} → {direction}")
                     self._discovered_lines = (
                         "\n".join(lines_found)
                         if lines_found
-                        else "Nessuna corsa attiva al momento (puoi comunque inserire linea e direzione manualmente)."
+                        else "No active trips found right now (you can still enter line and direction manually)."
                     )
                     return await self.async_step_details()
 

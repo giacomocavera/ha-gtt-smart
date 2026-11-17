@@ -42,7 +42,7 @@ class GTTSmartRealtimeBinarySensor(
             identifiers={(DOMAIN, entry.entry_id)},
             name=device_name,
             manufacturer="GTT Torino",
-            model=f"Palina {stop_id}",
+            model=f"Stop {stop_id}",
         )
 
     @property
