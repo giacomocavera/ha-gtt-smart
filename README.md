@@ -23,7 +23,7 @@ Integrazione custom per Home Assistant pensata per monitorare le fermate GTT (To
 
 1. Apri **HACS** in Home Assistant.
 2. Menu in alto a destra (tre puntini) -> **Repository personalizzati**.
-3. Incolla l'URL del repository: `https://github.com/TUO_USERNAME/ha-gtt-smart`
+3. Incolla l'URL del repository: `https://github.com/giacomocavera/ha-gtt-smart`
 4. Seleziona categoria **Integrazione** e aggiungi.
 5. Cerca **GTT Smart** in HACS, installala e riavvia Home Assistant.
 
@@ -65,6 +65,11 @@ Se usi il Widget Modello dell'app Home Assistant su Android:
 {% set rt = state_attr(s, 'next_is_realtime') %}
 {{ states(s) }}{% if rt is true %} (RT){% elif rt is false %} (PR){% endif %}{% if states(m) not in ['unavailable', 'unknown', 'none'] %} - {{ states(m) }} min{% endif %}
 Prossimi: {{ state_attr(s, 'second') }} | {{ state_attr(s, 'third') }}
+```
+
+## Note
+
+L'integrazione si appoggia agli endpoint pubblici del sito GTT. Se GTT dovesse modificare o dismettere quell'endpoint, potrebbe essere necessario aggiornare il client.
 
 ## Disclaimer
 
