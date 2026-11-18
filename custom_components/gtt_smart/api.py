@@ -4,6 +4,7 @@ from __future__ import annotations
 
 from datetime import datetime
 import logging
+import re
 from typing import Any
 
 import aiohttp
@@ -18,6 +19,8 @@ from .const import (
 
 _LOGGER = logging.getLogger(__name__)
 
+TIME_RE = re.compile(r"(\d{1,2}):(\d{2})")
+
 HEADERS = {
     "User-Agent": "Mozilla/5.0 (compatible; HomeAssistant-GTTSmart/1.0)",
     "Accept": "application/json, text/plain, */*",
@@ -29,37 +32,51 @@ class GTTApiError(Exception):
 
 
 def parse_hhmm(raw: Any) -> tuple[str, int] | None:
-    """Parse an HH:MM string into (normalized_str, minutes_of_day)."""
+    """Parse an HH:MM string (ignoring suffixes like 'D' or '*') into (str, minutes_of_day)."""
     if raw is None:
         return None
-    cleaned = str(raw).replace("*", "").strip()
-    if ":" not in cleaned:
+    match = TIME_RE.search(str(raw).strip())
+    if not match:
         return None
-    parts = cleaned.split(":", 1)
-    try:
-        hour = int(parts[0])
-        minute = int(parts[1])
-    except ValueError:
-        return None
+    hour = int(match.group(1))
+    minute = int(match.group(2))
     if not (0 <= hour <= 23 and 0 <= minute <= 59):
         return None
     return f"{hour:02d}:{minute:02d}", hour * 60 + minute
 
 
 def circular_diff_minutes(min_a: int, min_b: int) -> int:
-    """Smallest distance in minutes on a 24h clock."""
+    """Return smallest distance in minutes on a 24h clock."""
     diff = abs(min_a - min_b)
     return min(diff, 1440 - diff)
 
 
 def minutes_until(target_min: int, now_dt: datetime) -> int:
-    """Signed minutes from now_dt to target_min, handling midnight rollover."""
+    """Return signed minutes from now_dt to target_min, handling midnight rollover."""
     now_min = now_dt.hour * 60 + now_dt.minute
     diff = (target_min - now_min) % 1440
     # Treat times up to 2 hours ago as past (-120..-1)
     if diff > 1320:
         diff -= 1440
     return diff
+
+
+def is_in_quiet_hours(now_dt: datetime, start_str: str, end_str: str) -> bool:
+    """Return True if now_dt is inside [start, end), supporting overnight ranges."""
+    start_parsed = parse_hhmm(start_str)
+    end_parsed = parse_hhmm(end_str)
+    if not start_parsed or not end_parsed:
+        return False
+
+    now_m = now_dt.hour * 60 + now_dt.minute
+    start_m = start_parsed[1]
+    end_m = end_parsed[1]
+
+    if start_m == end_m:
+        return False
+    if start_m < end_m:
+        return start_m <= now_m < end_m
+    return now_m >= start_m or now_m < end_m
 
 
 def extract_pr_list(line_data: dict[str, Any]) -> list[str]:
