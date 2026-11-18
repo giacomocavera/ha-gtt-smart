@@ -60,11 +60,22 @@ Per ogni fermata/configurazione vengono create tre entità:
 Se usi il Widget Modello dell'app Home Assistant su Android:
 
 ```jinja2
-{% set s = 'sensor.bus_station_to_home_schedule' %}
-{% set m = 'sensor.bus_station_to_home_schedule_minutes' %}
-{% set rt = state_attr(s, 'next_is_realtime') %}
-{{ states(s) }}{% if rt is true %} (RT){% elif rt is false %} (PR){% endif %}{% if states(m) not in ['unavailable', 'unknown', 'none'] %} - {{ states(m) }} min{% endif %}
-Prossimi: {{ state_attr(s, 'second') }} | {{ state_attr(s, 'third') }}
+{% macro row(label, entity, min_entity) -%}
+{% set t = states(entity) -%}
+{% set m = states(min_entity) -%}
+{% set rt = state_attr(entity, 'next_is_realtime') -%}
+{% set sec = state_attr(entity, 'second') | default('--', true) -%}
+{% if t in ['unavailable', 'unknown', 'No upcoming bus', ''] -%}
+<font color="#9CA3AF"><b>{{ label }}</b> · nessun bus</font>
+{%- else -%}
+{% set col = '#4ADE80' if rt is true else '#FBBF24' -%}
+{% set dot = '●' if rt is true else '○' -%}
+<font color="#E5E7EB"><b>{{ label }}</b></font> <font color="{{ col }}"><b>{{ dot }} {{ t }}</b></font>{% if m not in ['unavailable', 'unknown', 'none', ''] %} <font color="#D1D5DB"><small>({{ m }}m)</small></font>{% endif %} <font color="#9CA3AF"><small>· {{ sec }}</small></font>
+{%- endif %}
+{%- endmacro %}
+{{ row('🏫➔🏠', 'sensor.bus_station_to_home_schedule', 'sensor.bus_station_to_home_schedule_minutes') }}<br>
+{{ row('🏠➔🏋️', 'sensor.bus_home_to_gym_schedule', 'sensor.bus_home_to_gym_schedule_minutes') }}<br>
+{{ row('🏋️➔🏠', 'sensor.bus_gym_to_home_schedule', 'sensor.bus_gym_to_home_schedule_minutes') }}
 ```
 
 ## Note
